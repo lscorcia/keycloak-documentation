@@ -14,6 +14,7 @@ A typical workflow is as follows:
 * Optionally checks the Certificate revocation status using OCSP (Online Certificate Status Protocol)
 * Optionally validates whether the key usage in the certificate matches the expected key usage
 * Optionally validates whether the extended key usage in the certificate matches the expected extended key usage
+* Optionally validates whether the policies in the certificate matches the expected certificate policies
 - If any of the above checks fails, the x.509 authentication fails
 - Otherwise, the authenticator extracts the certificate identity and maps it to an existing user
 - Once the certificate is mapped to an existing user, the behavior diverges depending on the authentication flow:
@@ -59,6 +60,7 @@ Other Features: Extended Certificate Validation::
 - Revocation status checking using OCSP/Responder URI
 - Certificate KeyUsage validation
 - Certificate ExtendedKeyUsage validation
+- Certificate Policy validation
 
 ==== Enable X.509 Client Certificate User Authentication
 
@@ -206,6 +208,12 @@ Verifies whether the certificate's KeyUsage extension bits are set. For example,
 
 `Validate Extended Key Usage` (optional)::
 Verifies one or more purposes as defined in the Extended Key Usage extension. See link:https://tools.ietf.org/html/rfc5280#section-4.2.1.12[RFC5280, Section-4.2.1.12]. Leave the parameter empty to disable the Extended Key Usage validation. The server will raise an error only when flagged as critical by the issuing CA and there is a key usage extension mismatch.
+
+`Validate Certificate Policy` (optional)::
+Verifies one or more policy OIDs as defined in the Certificate Policy extension. See link:https://tools.ietf.org/html/rfc5280#section-4.2.1.4[RFC5280, Section-4.2.1.4]. Leave the parameter empty to disable the Certificate Policy validation. Multiple policies should be separated using a comma.
+
+`Certificate Policy Validation Mode` (optional)::
+When more than one policy is specified in the `Validate Certificate Policy` setting, it decides whether the matching should check for all requested policies to be present, or one match is enough for a successful authentication. Default value is `All`, meaning that all requested policies should be present in the client certificate.
 
 `Bypass identity confirmation`::
 If set, X.509 client certificate authentication will not prompt the user to confirm the certificate identity and will automatically sign in the user upon successful authentication.
