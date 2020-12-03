@@ -198,6 +198,9 @@ Defines a path to a file that contains a CRL list. The value must be a path to a
 `OCSP Checking Enabled`(optional)::
 Defines whether to check the certificate revocation status using Online Certificate Status Protocol. 
 
+`OCSP Fail-Open Behavior`(optional)::
+By default the OCSP check must return a positive response in order to continue with a successful authentication. Sometimes however this check can be inconclusive: for example, the OCSP server could be unreachable, overloaded, or the client certificate may not contain an OCSP responder URI. When this setting is turned ON, authentication will be denied only if an explicit negative response is received by the OCSP responder and the certificate is definitely revoked. If a valid OCSP response is not avalaible the authentication attempt will be accepted.
+
 `OCSP Responder URI` (optional)::
 Allows to override a value of the OCSP responder URI in the certificate.
 
